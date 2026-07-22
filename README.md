@@ -59,14 +59,14 @@ The [innova2_xdma_opencapi](https://github.com/mwrnd/innova2_xdma_opencapi) proj
 
 4-Layer PCB. Inner 2 layers are GND planes. Differential pair are matched to a length of 61mm +/- 1mm both inter-pair and intra-pair (N-to-P).
 
-![OpenCAPI to PCIe x8 PCB Layout](img/OpenCAPI-to-PCIe_for_MNV303212A_RevA2.png)
+![OpenCAPI to PCIe x8 PCB Layout](img/OpenCAPI-to-PCIe_for_MNV303212A_RevA2_Layout.png)
 
 
 
 
 ## Schematic
 
-![OpenCAPI to PCIe x8 Schematic](img/OpenCAPI-to-PCIe_for_MNV303212A_RevA2.png)
+![OpenCAPI to PCIe x8 Schematic](img/OpenCAPI-to-PCIe_for_MNV303212A_RevA2_Schematic.png)
 
 
 
