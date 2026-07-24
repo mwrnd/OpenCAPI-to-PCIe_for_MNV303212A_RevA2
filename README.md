@@ -1,4 +1,4 @@
-**Work-In-Progress**: Notes need updating. v1.1 Gerbers need to be manufactured and tested but there should be no copper layer changes vs. v1.0.
+**Work-In-Progress**: Notes need updating. v1.1 Gerbers need to be manufactured and tested.
 
 
 # PCIe to Innova-2 MNV303212A RevA2 SlimSAS8x
@@ -17,9 +17,13 @@ The OpenCAPI interface is based on [PCI-Express](https://en.wikipedia.org/wiki/P
 
 ## Testing
 
-The [innova2_xdma_opencapi](https://github.com/mwrnd/innova2_xdma_opencapi) project is designed to test the `OpenCAPI-to-PCIe for MNV303212A RevA2` Adapter using an [Innova2 Flex SmartNIC Rev:A2 board](https://github.com/mwrnd/innova2_flex_xcku15p_notes).
+The [innova2_xdma_opencapi](https://github.com/mwrnd/innova2_xdma_opencapi) project is designed to test this `OpenCAPI-to-PCIe for MNV303212A RevA2` Adapter using an [Innova2 Flex SmartNIC Rev:A2 board](https://github.com/mwrnd/innova2_flex_xcku15p_notes).
 
-The Innova2 SmartNIC's XCKU15P FPGA does not have its Configuration Block in the same column as the OpenCAPI GTY transceivers so it is impossible to configure the FPGA within the [PCIe Specification's 100ms time limit](https://pcisig.com/specifications/ecr_ecn_process?speclib=100+ms). Motherboard boot must be delayed to allow the FPGA to configure itself before PCIe devices are enumerated by the host system. This can be accomplished by toggling the POWER button, then pressing and holding the RESET button for a second before releasing it. Or, [connect a capacitor across the reset pins of an ATX motherboard's Front Panel Header](https://github.com/mwrnd/ATX_Boot_Delay):
+The Innova2 SmartNIC's XCKU15P FPGA does not have its Configuration Block in the same column as the OpenCAPI GTY transceivers so it is impossible to configure the FPGA within the [PCIe Specification's 100ms time limit](https://pcisig.com/specifications/ecr_ecn_process?speclib=100+ms).
+
+![Innova2 XCKU15P Bank Diagram](img/Innova2_XCKU15P_Bank_Diagram.png)
+
+Motherboard boot must be delayed to allow the FPGA to configure itself before PCIe devices are enumerated by the host system. This can be accomplished by toggling the POWER button, then pressing and holding the RESET button for a second before releasing it. Or, [connect a capacitor across the reset pins of an ATX motherboard's Front Panel Header](https://github.com/mwrnd/ATX_Boot_Delay):
 
 ![Delay Boot Using Capacitor across Front Panel Header Reset Pins](img/Delay_Boot_Using_FrontPanelHeader_Capacitor.jpg)
 
