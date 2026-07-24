@@ -1,6 +1,3 @@
-**Work-In-Progress**: Notes need updating. v1.1 Gerbers need to be manufactured and tested.
-
-
 # PCIe to Innova-2 MNV303212A RevA2 SlimSAS8x
 
 This is a variant of the [OpenCAPI-to-PCIe](https://github.com/mwrnd/OpenCAPI-to-PCIe) project optimized for the **Innova-2 MNV303212A Rev:A2**.
@@ -26,7 +23,7 @@ The OpenCAPI interface is based on [PCI-Express](https://en.wikipedia.org/wiki/P
 
 ## Schematic
 
-Note the reverse channel ordering and swapped `_P` and `_N` for RX3, 4, and 7. This is done to optimize for the `MNV303212A-ADLT Rev:A2` board.
+Note the reverse channel ordering and swapped `_P` and `_N` for RX3, 4, and 7. This is done to optimize for the `MNV303212A-ADLT Rev:A2` board. Technically it should not matter. PCIe features automatic `_P-to-_N` swapping and the FPGA supports arbitrary lane assignment. I did this to eliminate all possible conflating problems while tracking down reliability issues.
 
 ![OpenCAPI to PCIe x8 Schematic](img/OpenCAPI-to-PCIe_for_MNV303212A_RevA2_Schematic.png)
 
@@ -35,9 +32,11 @@ Note the reverse channel ordering and swapped `_P` and `_N` for RX3, 4, and 7. T
 
 ## Design Notes
 
-Only a single component is required for the adapter, a [U10A474200T](https://www.digikey.com/en/products/detail/amphenol-cs-commercial-products/U10A474200T/14632855)/[U10A474240T](https://www.digikey.com/en/products/detail/amphenol-cs-commercial-products/U10A474240T/17066204) SlimSAS 8x Right-Angle SMD Connector. A SlimSAS 8x Cable such as the [3M 8ES8-1DF21](https://www.trustedparts.com/en/search/8ES8-1DF21)([Datasheet](https://multimedia.3m.com/mws/media/1398233O/3m-slimline-twin-ax-assembly-sff-8654-x8-30awg-78-5100-2665-8.pdf)) is required to use the adapter with an OpenCAPI FPGA Board.
+Only a single component is needed for the adapter, a [U10A474200T](https://www.digikey.com/en/products/detail/amphenol-cs-commercial-products/U10A474200T/14632855)/[U10A474240T](https://www.digikey.com/en/products/detail/amphenol-cs-commercial-products/U10A474240T/17066204) SlimSAS 8x Right-Angle SMD Connector.
 
-Resistor **R1** is shorted to connect `nPRSNT1` to `nPRSNT2_x8`. The trace can be scratched off and `nPRSNT1` can be connected to `nPRSNT2_x1` or `nPRSNT2_x4`.
+A SlimSAS 8x Cable such as the [3M 8ES8-1DF21](https://www.trustedparts.com/en/search/8ES8-1DF21)([Datasheet](https://multimedia.3m.com/mws/media/1398233O/3m-slimline-twin-ax-assembly-sff-8654-x8-30awg-78-5100-2665-8.pdf)) is required to use the adapter with an OpenCAPI FPGA Board.
+
+Resistor **R1** is shorted to connect `nPRSNT1` to `nPRSNT2_x8`. The trace can be scratched off and `nPRSNT1` can be connected to `nPRSNT2_x1` or `nPRSNT2_x4` to limit the PCIe lane width.
 
 
 
@@ -68,9 +67,14 @@ The Innova2 SmartNIC's XCKU15P FPGA does not have its Configuration Block in the
 
 ![Innova2 XCKU15P Bank Diagram](img/Innova2_XCKU15P_Bank_Diagram.png)
 
-Motherboard boot must be delayed to allow the FPGA to configure itself before PCIe devices are enumerated by the host system. This can be accomplished by toggling the POWER button, then pressing and holding the RESET button for a second before releasing it. Or, [connect a capacitor across the reset pins of an ATX motherboard's Front Panel Header](https://github.com/mwrnd/ATX_Boot_Delay):
+Motherboard boot must therefore be delayed to allow the FPGA to configure itself before the OpenCAPI-to-PCIe device is enumerated by the host system. This can be accomplished by toggling the POWER button, then pressing and holding the RESET button for a second before releasing it. Or, [connect a capacitor across the reset pins of an ATX motherboard's Front Panel Header](https://github.com/mwrnd/ATX_Boot_Delay):
 
 ![Delay Boot Using Capacitor across Front Panel Header Reset Pins](img/Delay_Boot_Using_FrontPanelHeader_Capacitor.jpg)
+
+
+
+
+### Cable Performance
 
 Using a [3M 8ES8-1DF21-0.75](https://www.trustedparts.com/en/search/8ES8-1DF21-0.75) cable:
 
@@ -93,14 +97,11 @@ PCIe Link Status is downgraded:
 
 ### Additional OpenCAPI Signals
 
-Additional useful signals from the OpenCAPI connector are routed to a 6x1 0.1" Header. The pinout matches a [TC74 I2C Temperature Sensor](https://www.microchip.com/en-us/product/tc74). Note 3.3V is from the PCIe connector. **PRE** is a Presence Detect pin which is connected to GND via a 50-Ohm resistor on the OpenCAPI AAC Add-In card (the Innova-2). **RST** is connected to PCIe/OpenCAPI RESET.
+Additional useful signals from the OpenCAPI connector are routed to a [6x1 0.1" Header](https://www.digikey.com/en/products/detail/sullins-connector-solutions/PPTC061LFBN-RC/810145). The pinout matches a [TC74 I2C Temperature Sensor](https://www.microchip.com/en-us/product/tc74). Note 3.3V is from the PCIe connector. **PRE** is a Presence Detect pin which is connected to GND via a 50-Ohm resistor on the OpenCAPI AAC Add-In card (the Innova-2). **RST** is connected to PCIe/OpenCAPI RESET.
 
 ![TC74A0-3.3VAT in OpenCAPI-to-PCIe Adapter](img/TC74A0-3.3VAT_in_OpenCAPI-to-PCIe_Adapter.jpg)
 
 The [innova2_xdma_opencapi](https://github.com/mwrnd/innova2_xdma_opencapi) project features the ability to [test](https://github.com/mwrnd/innova2_xdma_opencapi/blob/main/README.md#opencapi-i2c-over-xdma) a TC74Ax-3.3VAT in an OpenCAPI-to-PCIe Adapter.
 
 ![TC74A0-3.3VAT Testing in a System](img/TC74A0-3.3VAT_in_OpenCAPI-to-PCIe_Adapter_In-System.jpg)
-
-
-
 
