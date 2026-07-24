@@ -15,6 +15,49 @@ The OpenCAPI interface is based on [PCI-Express](https://en.wikipedia.org/wiki/P
 
 
 
+## PCB Layout
+
+4-Layer PCB. Inner 2 layers are GND planes. Differential pair are matched to a length of 61mm +/- 1mm both inter-pair and intra-pair (N-to-P).
+
+![OpenCAPI to PCIe x8 PCB Layout](img/OpenCAPI-to-PCIe_for_MNV303212A_RevA2_Layout.png)
+
+
+
+
+## Schematic
+
+![OpenCAPI to PCIe x8 Schematic](img/OpenCAPI-to-PCIe_for_MNV303212A_RevA2_Schematic.png)
+
+
+
+
+## Design Notes
+
+Only a single component is required for the adapter, a [U10A474200T](https://www.digikey.com/en/products/detail/amphenol-cs-commercial-products/U10A474200T/14632855)/[U10A474240T](https://www.digikey.com/en/products/detail/amphenol-cs-commercial-products/U10A474240T/17066204) SlimSAS 8x Right-Angle SMD Connector. A SlimSAS 8x Cable such as the [3M 8ES8-1DF21](https://www.trustedparts.com/en/search/8ES8-1DF21)([Datasheet](https://multimedia.3m.com/mws/media/1398233O/3m-slimline-twin-ax-assembly-sff-8654-x8-30awg-78-5100-2665-8.pdf)) is required to use the adapter with an OpenCAPI FPGA Board.
+
+Resistor **R1** is shorted to connect `nPRSNT1` to `nPRSNT2_x8`. The trace can be scratched off and `nPRSNT1` can be connected to `nPRSNT2_x1` or `nPRSNT2_x4`.
+
+
+
+
+### PCB Stackup
+
+I am using values from [JLCPCB](https://jlcpcb.com/capabilities/pcb-capabilities).
+
+![4-Layer Stackup](img/Layer_Stackup.png)
+
+
+
+
+### Trace Impedance Control
+
+OpenCAPI uses 85ohm impedance cables. I played with the values until I got the loosest differential pair coupling that is manufacturable with larger tolerances.
+
+![85ohm Differential Impedance in DigiKey Calculator](img/PCB_Impedance_0.30mm_0.18mm_on_0.21mm_7628.png)
+
+
+
+
 ## Testing
 
 The [innova2_xdma_opencapi](https://github.com/mwrnd/innova2_xdma_opencapi) project is designed to test this `OpenCAPI-to-PCIe for MNV303212A RevA2` Adapter using an [Innova2 Flex SmartNIC Rev:A2 board](https://github.com/mwrnd/innova2_flex_xcku15p_notes).
@@ -55,49 +98,6 @@ Additional useful signals from the OpenCAPI connector are routed to a 6x1 0.1" H
 The [innova2_xdma_opencapi](https://github.com/mwrnd/innova2_xdma_opencapi) project features the ability to [test](https://github.com/mwrnd/innova2_xdma_opencapi/blob/main/README.md#opencapi-i2c-over-xdma) a TC74Ax-3.3VAT in an OpenCAPI-to-PCIe Adapter.
 
 ![TC74A0-3.3VAT Testing in a System](img/TC74A0-3.3VAT_in_OpenCAPI-to-PCIe_Adapter_In-System.jpg)
-
-
-
-
-## PCB Layout
-
-4-Layer PCB. Inner 2 layers are GND planes. Differential pair are matched to a length of 61mm +/- 1mm both inter-pair and intra-pair (N-to-P).
-
-![OpenCAPI to PCIe x8 PCB Layout](img/OpenCAPI-to-PCIe_for_MNV303212A_RevA2_Layout.png)
-
-
-
-
-## Schematic
-
-![OpenCAPI to PCIe x8 Schematic](img/OpenCAPI-to-PCIe_for_MNV303212A_RevA2_Schematic.png)
-
-
-
-
-## Design Notes
-
-Only a single component is required for the adapter, a [U10A474200T](https://www.digikey.com/en/products/detail/amphenol-cs-commercial-products/U10A474200T/14632855)/[U10A474240T](https://www.digikey.com/en/products/detail/amphenol-cs-commercial-products/U10A474240T/17066204) SlimSAS 8x Right-Angle SMD Connector. A SlimSAS 8x Cable such as the [3M 8ES8-1DF21](https://www.trustedparts.com/en/search/8ES8-1DF21)([Datasheet](https://multimedia.3m.com/mws/media/1398233O/3m-slimline-twin-ax-assembly-sff-8654-x8-30awg-78-5100-2665-8.pdf)) is required to use the adapter with an OpenCAPI FPGA Board.
-
-Resistor **R1** is shorted to connect `nPRSNT1` to `nPRSNT2_x8`. The trace can be scratched off and `nPRSNT1` can be connected to `nPRSNT2_x1` or `nPRSNT2_x4`.
-
-
-
-
-### PCB Stackup
-
-I am using values from [JLCPCB](https://jlcpcb.com/capabilities/pcb-capabilities).
-
-![4-Layer Stackup](img/Layer_Stackup.png)
-
-
-
-
-### Trace Impedance Control
-
-OpenCAPI uses 85ohm impedance cables. I played with the values until I got the loosest differential pair coupling that is manufacturable with larger tolerances.
-
-![85ohm Differential Impedance in DigiKey Calculator](img/PCB_Impedance_0.30mm_0.18mm_on_0.21mm_7628.png)
 
 
 
