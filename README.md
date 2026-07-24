@@ -26,6 +26,8 @@ The OpenCAPI interface is based on [PCI-Express](https://en.wikipedia.org/wiki/P
 
 ## Schematic
 
+Note the reverse channel ordering and swapped `_P` and `_N` for RX3, 4, and 7. This is done to optimize for the `MNV303212A-ADLT Rev:A2` board.
+
 ![OpenCAPI to PCIe x8 Schematic](img/OpenCAPI-to-PCIe_for_MNV303212A_RevA2_Schematic.png)
 
 
