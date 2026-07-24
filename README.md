@@ -100,7 +100,7 @@ PCIe Link Status is downgraded:
 
 ### Additional OpenCAPI Signals
 
-Additional useful signals from the OpenCAPI connector are routed to a [6x1 0.1" Header](https://www.digikey.com/en/products/detail/sullins-connector-solutions/PPTC061LFBN-RC/810145). The pinout matches a [TC74 I2C Temperature Sensor](https://www.microchip.com/en-us/product/tc74). Note 3.3V is from the PCIe connector. **PRE** is a Presence Detect pin which is connected to GND via a 50-Ohm resistor on the OpenCAPI AAC Add-In card (the Innova-2). **RST** is connected to PCIe/OpenCAPI RESET.
+Additional useful signals from the OpenCAPI connector are routed to a 6x1 0.1" Header ([DigiKey](https://www.digikey.com/en/products/detail/sullins-connector-solutions/PPTC061LFBN-RC/810145)). The pinout matches a [TC74 I2C Temperature Sensor](https://www.microchip.com/en-us/product/tc74) ([DigiKey](https://www.digikey.com/en/products/detail/microchip-technology/TC74A0-3-3VAT/442720)) for testing I2C. I2C pull-ups are on the AAC Add-in card (Innova-2). Note 3.3V is from the PCIe connector. **PRE** is a Presence Detect pin which is connected to GND via a 50-Ohm resistor on the OpenCAPI AAC Add-In card (Innova-2). **RST** is connected to PCIe/OpenCAPI RESET.
 
 ![TC74A0-3.3VAT in OpenCAPI-to-PCIe Adapter](img/TC74A0-3.3VAT_in_OpenCAPI-to-PCIe_Adapter.jpg)
 
