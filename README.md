@@ -1,3 +1,6 @@
+**Work-In-Progress**: Notes need updating. v1.1 Gerbers need to be manufactured and tested.
+
+
 # PCIe to Innova-2 MNV303212A RevA2 SlimSAS8x
 
 This is a variant of the [OpenCAPI-to-PCIe](https://github.com/mwrnd/OpenCAPI-to-PCIe) project optimized for the **Innova-2 MNV303212A Rev:A2**.
